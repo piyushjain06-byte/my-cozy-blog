@@ -1,27 +1,111 @@
 @import "tailwindcss";
 
-@theme {
-  --color-paper: hsl(38 44% 96%);
-  --color-paper-deep: hsl(36 30% 91%);
-  --color-ink: hsl(24 15% 12%);
-  --color-ink-soft: hsl(24 8% 38%);
-  --color-accent: hsl(8 72% 46%);
-  --color-accent-soft: hsl(8 60% 92%);
-  --color-line: hsl(30 16% 82%);
+@custom-variant dark (&:where(.dark, .dark *));
 
-  --font-display: "Instrument Serif", Georgia, serif;
-  --font-body: "Work Sans", system-ui, sans-serif;
+:root {
+  --background: oklch(0.977 0.008 85);
+  --surface: oklch(1 0 0);
+  --surface-muted: oklch(0.955 0.012 84);
+  --foreground: oklch(0.19 0.012 60);
+  --muted-foreground: oklch(0.52 0.018 70);
+  --border: oklch(0.9 0.014 80);
+  --accent: oklch(0.55 0.115 62);
+  --accent-hover: oklch(0.48 0.115 62);
+  --accent-foreground: oklch(0.99 0.004 85);
+  --accent-soft: oklch(0.94 0.035 70);
+  --ring: oklch(0.55 0.115 62);
+  --shadow-card: 0 1px 2px oklch(0.19 0.012 60 / 0.05),
+    0 12px 32px -18px oklch(0.19 0.012 60 / 0.35);
 }
 
-html,
+.dark {
+  --background: oklch(0.18 0.008 70);
+  --surface: oklch(0.226 0.009 70);
+  --surface-muted: oklch(0.262 0.01 70);
+  --foreground: oklch(0.95 0.008 85);
+  --muted-foreground: oklch(0.73 0.014 80);
+  --border: oklch(0.32 0.012 70);
+  --accent: oklch(0.76 0.115 70);
+  --accent-hover: oklch(0.83 0.11 72);
+  --accent-foreground: oklch(0.2 0.02 70);
+  --accent-soft: oklch(0.3 0.035 70);
+  --ring: oklch(0.76 0.115 70);
+  --shadow-card: 0 1px 2px oklch(0 0 0 / 0.4), 0 14px 34px -20px oklch(0 0 0 / 0.8);
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-surface: var(--surface);
+  --color-surface-muted: var(--surface-muted);
+  --color-foreground: var(--foreground);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-border: var(--border);
+  --color-accent: var(--accent);
+  --color-accent-hover: var(--accent-hover);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent-soft: var(--accent-soft);
+  --color-ring: var(--ring);
+
+  --font-display: "DM Serif Display", Georgia, serif;
+  --font-body: "Fira Sans", system-ui, sans-serif;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
 body {
-  background-color: var(--color-paper);
-  color: var(--color-ink);
+  background-color: var(--background);
+  color: var(--foreground);
   font-family: var(--font-body);
   -webkit-font-smoothing: antialiased;
 }
 
 ::selection {
-  background: var(--color-accent);
-  color: var(--color-paper);
+  background: var(--accent);
+  color: var(--accent-foreground);
+}
+
+:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+@utility card-shadow {
+  box-shadow: var(--shadow-card);
+}
+
+@utility rule-label {
+  font-size: 0.6875rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  font-weight: 500;
+}
+
+@utility fade-up {
+  animation: fade-up 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
 }
