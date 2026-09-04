@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as ArchiveRouteImport } from './routes/archive'
+import { Route as ContactRouteImport } from './routes/contact'
 import { Route as PostsSlugRouteImport } from './routes/posts.$slug'
 
 const IndexRoute = IndexRouteImport.update({
@@ -29,6 +30,11 @@ const ArchiveRoute = ArchiveRouteImport.update({
   path: '/archive',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ContactRoute = ContactRouteImport.update({
+  id: '/contact',
+  path: '/contact',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const PostsSlugRoute = PostsSlugRouteImport.update({
   id: '/posts/$slug',
   path: '/posts/$slug',
@@ -39,12 +45,14 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/archive': typeof ArchiveRoute
+  '/contact': typeof ContactRoute
   '/posts/$slug': typeof PostsSlugRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/archive': typeof ArchiveRoute
+  '/contact': typeof ContactRoute
   '/posts/$slug': typeof PostsSlugRoute
 }
 export interface FileRoutesById {
@@ -52,20 +60,22 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/archive': typeof ArchiveRoute
+  '/contact': typeof ContactRoute
   '/posts/$slug': typeof PostsSlugRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/about' | '/archive' | '/posts/$slug'
+  fullPaths: '/' | '/about' | '/archive' | '/contact' | '/posts/$slug'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/about' | '/archive' | '/posts/$slug'
-  id: '__root__' | '/' | '/about' | '/archive' | '/posts/$slug'
+  to: '/' | '/about' | '/archive' | '/contact' | '/posts/$slug'
+  id: '__root__' | '/' | '/about' | '/archive' | '/contact' | '/posts/$slug'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AboutRoute: typeof AboutRoute
   ArchiveRoute: typeof ArchiveRoute
+  ContactRoute: typeof ContactRoute
   PostsSlugRoute: typeof PostsSlugRoute
 }
 
@@ -92,6 +102,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ArchiveRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/contact': {
+      id: '/contact'
+      path: '/contact'
+      fullPath: '/contact'
+      preLoaderRoute: typeof ContactRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/posts/$slug': {
       id: '/posts/$slug'
       path: '/posts/$slug'
@@ -106,6 +123,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
   ArchiveRoute: ArchiveRoute,
+  ContactRoute: ContactRoute,
   PostsSlugRoute: PostsSlugRoute,
 }
 export const routeTree = rootRouteImport
